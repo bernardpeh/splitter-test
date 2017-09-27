@@ -62,8 +62,10 @@ contract Splitter {
     
     function split() public payable isOwner {
         // Make sure frontend accept wei only.
-        // forced integer when divided by 2.
         require(msg.value > 0);
+        // make sure value is divisible by 2.
+        require(msg.value % 2 == 0);
+
         uint halfValue = msg.value.div(2);
         recipients[recipient1] = recipients[recipient1].add(halfValue);
         recipients[recipient2] = recipients[recipient2].add(halfValue);
