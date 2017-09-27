@@ -35,7 +35,7 @@ contract Splitter {
     
     using SafeMath for uint;
     
-    mapping(address => uint) recipients;
+    mapping(address => uint) public recipients;
     
     modifier isOwner {
         require(msg.sender == owner);
@@ -90,12 +90,8 @@ contract Splitter {
         return true;
     }
 		
-		function changeOwner(address _newOwner) public isOwner returns (uint) {
-				owner = newOwner;
-		}
-    
-    function getBalance(address _recipient) public view returns (uint) {
-        return recipients[_recipient];
+    function changeOwner(address _newOwner) public isOwner returns (uint) {
+        owner = newOwner;
     }
     
     function withdraw(address _recipient) public isNotOwner returns (bool) {
