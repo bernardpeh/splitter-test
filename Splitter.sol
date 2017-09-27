@@ -2,25 +2,25 @@ pragma solidity 0.4.17;
 
 library SafeMath {
     
-  function mul(uint256 a, uint256 b) internal constant returns (uint256) {
+  function mul(uint256 a, uint256 b) internal pure returns (uint256) {
     uint256 c = a * b;
     assert(a == 0 || c / a == b);
     return c;
   }
 
-  function div(uint256 a, uint256 b) internal constant returns (uint256) {
+  function div(uint256 a, uint256 b) internal pure returns (uint256) {
     // assert(b > 0); // Solidity automatically throws when dividing by 0
     uint256 c = a / b;
     // assert(a == b * c + a % b); // There is no case in which this doesn't hold
     return c;
   }
 
-  function sub(uint256 a, uint256 b) internal constant returns (uint256) {
+  function sub(uint256 a, uint256 b) internal pure returns (uint256) {
     assert(b <= a);
     return a - b;
   }
 
-  function add(uint256 a, uint256 b) internal constant returns (uint256) {
+  function add(uint256 a, uint256 b) internal pure returns (uint256) {
     uint256 c = a + b;
     assert(c >= a);
     return c;
@@ -61,16 +61,12 @@ contract Splitter {
     }
     
     function split() public payable isOwner {
-        // check msg.value is divisable by 2. Make sure frontend accept wei only.
-        // force integer and will absorb the indivisible wei
+        // Make sure frontend accept wei only.
+        // forced integer when divided by 2.
         uint halfValue = msg.value.div(2);
         recipients[recipient1] = recipients[recipient1].add(halfValue);
         recipients[recipient2] = recipients[recipient2].add(halfValue);
                 
-        // uint halfValue = msg.value/2;
-        // recipients[recipient1] += halfValue;
-        // recipients[recipient2] += halfValue;
-        
         LogSplit(msg.sender, msg.value);
     }
     
@@ -93,7 +89,7 @@ contract Splitter {
         return true;
     }
     
-    function getBalance(address _recipient) public constant returns (uint) {
+    function getBalance(address _recipient) public view returns (uint) {
         return recipients[_recipient];
     }
     
@@ -106,7 +102,7 @@ contract Splitter {
         return true;
     }
     
-    function getContractBalance() public constant returns (uint) {
+    function getContractBalance() public view returns (uint) {
         return this.balance;    
     }
     
