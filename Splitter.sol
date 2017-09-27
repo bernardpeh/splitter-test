@@ -89,6 +89,10 @@ contract Splitter {
         recipients[_new] = tranferValue;
         return true;
     }
+		
+		function changeOwner(address _newOwner) public isOwner returns (uint) {
+				owner = newOwner;
+		}
     
     function getBalance(address _recipient) public view returns (uint) {
         return recipients[_recipient];
